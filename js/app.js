@@ -52,21 +52,42 @@ for (let i = 0; i < cards.length; i++) {
     card[i].addEventListener('click', addToOpenedCards);
 }
 
-// Display card function definition
+// Display card function 
 function openCard(event) {
     this.classList.toggle('open');
     this.classList.toggle('show');
 }
 
-//add the card to a *list* of "open" cards function
+//function to run if two opened cards match
+function match() {
+    setTimeout(function() {
+        openedCards[0].classList.add('match');
+        openedCards[1].classList.add('match');
+        openedCards[0].classList.remove('show', 'open');
+        openedCards[1].classList.remove('show', 'open');
+        matchedCards.push(openedCards[0], openedCards[1]);
+        openedCards = [];
+    }, 750);
+}
+
+//function to run if two opened cards do not match
+function notMatch() {
+    setTimeout(function() {
+        openedCards[0].classList.remove('show', 'open');
+        openedCards[1].classList.remove('show', 'open');
+        openedCards = [];
+    }, 1500);
+}
+
+//add the card to a *list* of "open" cards function 
 function addToOpenedCards(event) {
     openedCards.push(this);
     if (openedCards.length === 2) {
         //if opened cards match run match else run unmatched function
-        if (openedCards[0].firstElementChild.classList === openedCards.firstElementChild.classList) {
-            matched();
+        if (openedCards[0].firstElementChild.classList.value === openedCards[1].firstElementChild.classList.value) {
+            match();
         } else {
-            notMatched();
+            notMatch();
         }
     }
 }
