@@ -8,6 +8,7 @@ const deck = document.querySelector('.deck');
 
 const card = document.getElementsByClassName('card');
 
+let openCards = [];
 
 /*
  * Display the cards on the page
@@ -42,3 +43,14 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+// Display card function definition
+function openCard(event) {
+    this.classList.toggle('open');
+    this.classList.toggle('show');
+}
+
+// Add event listeners on card click
+for (let i = 0; i < cards.length; i++) {
+    card[i].addEventListener('click', openCard);
+}
