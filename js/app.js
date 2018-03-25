@@ -54,6 +54,10 @@ for (let i = 0; i < cards.length; i++) {
 
 // Display card function 
 function openCard(event) {
+    //disable card opening if there're two cards opened
+    if (openedCards.length === 2) {
+        return false;
+    }
     this.classList.toggle('open');
     this.classList.toggle('show');
 }
@@ -76,7 +80,7 @@ function notMatch() {
         openedCards[0].classList.remove('show', 'open');
         openedCards[1].classList.remove('show', 'open');
         openedCards = [];
-    }, 1500);
+    }, 1000);
 }
 
 //add the card to a *list* of "open" cards function 
