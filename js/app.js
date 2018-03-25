@@ -8,7 +8,7 @@ const deck = document.querySelector('.deck');
 
 const card = document.getElementsByClassName('card');
 
-let openCards = [];
+let openedCards = [];
 
 /*
  * Display the cards on the page
@@ -44,13 +44,22 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+// Add event listeners on card click
+for (let i = 0; i < cards.length; i++) {
+    card[i].addEventListener('click', openCard);
+    card[i].addEventListener('click', addToOpenedCards);
+}
+
 // Display card function definition
 function openCard(event) {
     this.classList.toggle('open');
     this.classList.toggle('show');
 }
 
-// Add event listeners on card click
-for (let i = 0; i < cards.length; i++) {
-    card[i].addEventListener('click', openCard);
+//add the card to a *list* of "open" cards
+function addToOpenedCards(event) {
+    openedCards.push(this);
+    // if (openedCards.length === 2) {
+    //     //run match function
+    // }
 }
