@@ -10,6 +10,8 @@ const card = document.getElementsByClassName('card');
 
 let openedCards = [];
 
+let matchedCards = [];
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -56,10 +58,15 @@ function openCard(event) {
     this.classList.toggle('show');
 }
 
-//add the card to a *list* of "open" cards
+//add the card to a *list* of "open" cards function
 function addToOpenedCards(event) {
     openedCards.push(this);
-    // if (openedCards.length === 2) {
-    //     //run match function
-    // }
+    if (openedCards.length === 2) {
+        //if opened cards match run match else run unmatched function
+        if (openedCards[0].firstElementChild.classList === openedCards.firstElementChild.classList) {
+            matched();
+        } else {
+            notMatched();
+        }
+    }
 }
