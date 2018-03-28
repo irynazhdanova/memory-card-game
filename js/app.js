@@ -94,7 +94,9 @@ function openCard(event) {
 //Add opened card to the list of opened cards
 function addToOpenedCards(event) {
     openedCards.push(event.target.firstElementChild);
+    // Check if two cards match or not happens when there're two opened cards
     if (openedCards.length === 2) {
+        // Compare if two opened cards match  
         if (openedCards[0].classList.value === openedCards[1].classList.value) {
             match(openedCards);
         } else {
@@ -103,7 +105,8 @@ function addToOpenedCards(event) {
     } 
 }
 
-// Check if two opened cards match
+// Function to run if two opened cards do match
+// cards are locked in the open position
 function match(arr) {
     setTimeout(function(){
         arr[0].parentNode.classList.remove('open', 'show');
@@ -115,6 +118,8 @@ function match(arr) {
     }, 800); 
 }
 
+// Function to run if two opened cards do not match
+// Cards get closed and become available for clicks again
 function notMatch(arr) {
         setTimeout(function() {
             arr[0].parentNode.classList.remove('open', 'show', 'disable');
