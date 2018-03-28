@@ -20,6 +20,13 @@ let matchedCards = [];
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+//Start new game on document load
+document.addEventListener('DOMContentLoaded', startGame);
+
+// Start new game on restart button press
+restart.addEventListener('click', function() {
+    startGame();
+});
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -38,6 +45,8 @@ function shuffle(array) {
 
 //start game function definition
 function startGame() {
+    matchedCards = [];
+    openedCards = [];
     //empty the list of cards
     deck.innerHTML = '';
 
@@ -65,59 +74,53 @@ function startGame() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-// Display card function 
+// Function to open cards 
+deck.addEventListener('click', function(event) {
+    //Check if user clicked a card on the deck
+    if(!(event.target.className === 'deck') && (openedCards.length <= 2)) {
+        openCard(event);
+        addToOpenedCards(event);
+    }
+});
+//A function to open a card's icon
 function openCard(event) {
-    //disable card opening if there're two cards opened
-    if (openedCards.length === 2) {
+    if(openedCards.length < 2) {
+        event.target.className = 'card open show disable';
+    } else {
         return false;
     }
-    this.classList.toggle('open');
-    this.classList.toggle('show');
 }
 
-//function to run if two opened cards match
-function match() {
-    setTimeout(function() {
-        openedCards[0].classList.add('match');
-        openedCards[1].classList.add('match');
-        openedCards[0].classList.remove('show', 'open');
-        openedCards[1].classList.remove('show', 'open');
-        matchedCards.push(openedCards[0], openedCards[1]);
-        openedCards = [];
-    }, 750);
-}
-
-//function to run if two opened cards do not match
-function notMatch() {
-    setTimeout(function() {
-        openedCards[0].classList.remove('show', 'open');
-        openedCards[1].classList.remove('show', 'open');
-        openedCards = [];
-    }, 1000);
-}
-
-//add the card to a *list* of "open" cards function 
+//Add opened card to the list of opened cards
 function addToOpenedCards(event) {
-    openedCards.push(this);
+    openedCards.push(event.target.firstElementChild);
     if (openedCards.length === 2) {
-        //if opened cards match run match else run unmatched function
-        if (openedCards[0].firstElementChild.classList.value === openedCards[1].firstElementChild.classList.value) {
-            match();
+        if (openedCards[0].classList.value === openedCards[1].classList.value) {
+            match(openedCards);
         } else {
-            notMatch();
+            notMatch(openedCards);
         }
-    }
+    } 
 }
 
-// Event listeners
-// Start new game on restart button press
-restart.addEventListener('click', startGame);
-
-//Start new game on document load
-document.addEventListener('DOMContentLoaded', startGame);
-
-// Add event listeners on card click
-for (let i = 0; i < iconSet.length; i++) {
-    cards[i].addEventListener('click', openCard);
-    cards[i].addEventListener('click', addToOpenedCards);
+// Check if two opened cards match
+function match(arr) {
+    setTimeout(function(){
+        arr[0].parentNode.classList.remove('open', 'show');
+        arr[0].parentNode.classList.add('match');
+        arr[1].parentNode.classList.remove('open', 'show');
+        arr[1].parentNode.classList.add('match');
+        matchedCards.push(arr[0], arr[1]);
+        openedCards = [];   
+    }, 800); 
 }
+
+function notMatch(arr) {
+        setTimeout(function() {
+            arr[0].parentNode.classList.remove('open', 'show', 'disable');
+            arr[1].parentNode.classList.remove('open', 'show', 'disable');
+            openedCards = [];
+        }, 800); 
+}
+
+ 
