@@ -14,6 +14,14 @@ let openedCards = [];
 
 let matchedCards = [];
 
+let moveCount = document.querySelector('.moves');
+
+let moves = 0;
+
+const starList = document.querySelector('.stars');
+
+let stars =  document.querySelectorAll('.stars li');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -45,8 +53,16 @@ function shuffle(array) {
 
 //start game function definition
 function startGame() {
+    //empty cards arrays
     matchedCards = [];
     openedCards = [];
+    //reset moves count
+    moves = 0;
+    moveCount.innerHTML = moves;
+    // reset visibility of rating stars
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].style.visibility = 'visible';
+    }
     //empty the list of cards
     deck.innerHTML = '';
 
@@ -96,6 +112,8 @@ function addToOpenedCards(event) {
     openedCards.push(event.target.firstElementChild);
     // Check if two cards match or not happens when there're two opened cards
     if (openedCards.length === 2) {
+        // add a move to moves if user opened two cards
+        moveCounter();
         // Compare if two opened cards match  
         if (openedCards[0].classList.value === openedCards[1].classList.value) {
             match(openedCards);
@@ -126,6 +144,23 @@ function notMatch(arr) {
             arr[1].parentNode.classList.remove('open', 'show', 'disable');
             openedCards = [];
         }, 800); 
+}
+
+//Count clicks function
+function moveCounter() {
+    moves++;
+    // Display move count 
+    moveCount.innerHTML = moves;
+    // change stars rating according to the move count
+    if (moves >= 0 && moves < 13) {
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].style.visibility = 'visible';
+        }
+    } else if (moves >= 13 && moves <= 18) {
+        starList.lastElementChild.style.visibility = 'hidden';
+    } else if (moves > 18) {
+        starList.lastElementChild.previousElementSibling.style.visibility = 'hidden';
+    }
 }
 
  
