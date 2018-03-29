@@ -16,11 +16,17 @@ let matchedCards = [];
 
 let moveCount = document.querySelector('.moves');
 
-let moves = 0;
+let moves = 0;// move counter (two opened cards)
+
+let clicks = 0; // click counter
 
 const starList = document.querySelector('.stars');
 
 let stars =  document.querySelectorAll('.stars li');
+
+const timer = document.querySelector('.timer');
+
+let time; // used to set setInterval with time count function
 
 /*
  * Display the cards on the page
@@ -57,12 +63,16 @@ function startGame() {
     matchedCards = [];
     openedCards = [];
     //reset moves count
+    clicks = 0;
     moves = 0;
     moveCount.innerHTML = moves;
     // reset visibility of rating stars
     for (let i = 0; i < stars.length; i++) {
         stars[i].style.visibility = 'visible';
     }
+    //reset timer
+    stopTimer();
+    timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
     //empty the list of cards
     deck.innerHTML = '';
 
@@ -90,6 +100,7 @@ function startGame() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
 // Function to open cards 
 deck.addEventListener('click', function(event) {
     //Check if user clicked a card on the deck
@@ -97,7 +108,9 @@ deck.addEventListener('click', function(event) {
         openCard(event);
         addToOpenedCards(event);
     }
+
 });
+
 //A function to open a card's icon
 function openCard(event) {
     if(openedCards.length < 2) {
@@ -110,10 +123,11 @@ function openCard(event) {
 //Add opened card to the list of opened cards
 function addToOpenedCards(event) {
     openedCards.push(event.target.firstElementChild);
+    moveCounter();
     // Check if two cards match or not happens when there're two opened cards
     if (openedCards.length === 2) {
         // add a move to moves if user opened two cards
-        moveCounter();
+        
         // Compare if two opened cards match  
         if (openedCards[0].classList.value === openedCards[1].classList.value) {
             match(openedCards);
@@ -148,9 +162,16 @@ function notMatch(arr) {
 
 //Count clicks function
 function moveCounter() {
-    moves++;
+    clicks++;
+    moves = Math.floor(clicks/2);
     // Display move count 
     moveCount.innerHTML = moves;
+    if (clicks === 1) {
+        time = setInterval(function(){
+            timeCount();
+        }, 1000);
+    }
+    
     // change stars rating according to the move count
     if (moves >= 0 && moves < 13) {
         for (let i = 0; i < stars.length; i++) {
@@ -163,4 +184,39 @@ function moveCounter() {
     }
 }
 
- 
+// Timer function
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+function timeCount() {
+        timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
+        seconds++;
+        if(seconds)
+        if(seconds === 60) {
+            minutes++;
+            seconds = 0;
+        }
+
+        if(minutes === 60) {
+            hours++;
+            minutes = 0;
+        }
+}
+
+// Stop timer
+    function stopTimer() {
+        clearInterval(time);
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+    }
+
+// Add zeros to timer 
+function addZero(num) {
+    if (num < 10) {
+        return '0' + num;
+    } else {
+        return num;
+    }
+}
