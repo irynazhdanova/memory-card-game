@@ -163,7 +163,14 @@ function notMatch(arr) {
 //Count clicks function
 function moveCounter() {
     clicks++;
+    // if user opened two cards add one move to moves
     moves = Math.floor(clicks/2);
+    
+    if (moves ===1) {
+        moveCount.nextElementSibling.innerHTML = ' Move';
+    } else {
+        moveCount.nextElementSibling.innerHTML = ' Moves';
+    }
     // Display move count 
     moveCount.innerHTML = moves;
     if (clicks === 1) {
@@ -171,7 +178,7 @@ function moveCounter() {
             timeCount();
         }, 1000);
     }
-    
+
     // change stars rating according to the move count
     if (moves >= 0 && moves < 13) {
         for (let i = 0; i < stars.length; i++) {
@@ -192,12 +199,11 @@ let hours = 0;
 function timeCount() {
         timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
         seconds++;
-        if(seconds)
         if(seconds === 60) {
             minutes++;
             seconds = 0;
         }
-
+        
         if(minutes === 60) {
             hours++;
             minutes = 0;
