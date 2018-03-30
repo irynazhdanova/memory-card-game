@@ -182,11 +182,15 @@ function emptyArray(arr) {
 // Function to run if two opened cards do not match
 // Cards get closed and become available for clicks again
 function notMatch(arr) {
+        setTimeout(function(){
+            arr[0].parentNode.classList.add('mismatch');
+            arr[1].parentNode.classList.add('mismatch');
+        }, 500);
         setTimeout(function() {
-            arr[0].parentNode.classList.remove('open', 'show', 'disable');
-            arr[1].parentNode.classList.remove('open', 'show', 'disable');
+            arr[0].parentNode.classList.remove('open', 'show', 'disable', 'mismatch');
+            arr[1].parentNode.classList.remove('open', 'show', 'disable', 'mismatch');
             openedCards = [];
-        }, 800); 
+        }, 1500); 
 }
 
 //Count clicks function
@@ -215,10 +219,8 @@ function moveCounter() {
         }
     } else if (moves >= 13 && moves <= 18) {
         starList.lastElementChild.firstElementChild.className = 'fa fa-star-o';
-        console.log(minutes);
     } else if (moves > 18) {
         starList.lastElementChild.previousElementSibling.firstElementChild.className = 'fa fa-star-o';
-        console.log(minutes);
     }
 }
 
