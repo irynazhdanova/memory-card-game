@@ -128,7 +128,8 @@ h1 {
     top: 25%;
     left: 10%;
     z-index: 1;
-    background: #fff url(../img/modal-background-transparent.png);
+    background: #fff url(../img/modal-background-transparent.png); 
+    /*credits for bg picture http://pngriver.com/colorful-fireworks-png-transparent-clipart-image-7917/ */
     background-size: contain;
     background-position: center center;
     font-size: 1.2em;
