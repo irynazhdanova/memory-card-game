@@ -84,9 +84,9 @@ function startGame() {
     clicks = 0;
     moves = 0;
     moveCount.innerHTML = moves;
-    // reset visibility of rating stars
+    // reset star rating
     for (let i = 0; i < stars.length; i++) {
-        stars[i].style.visibility = 'visible';
+        stars[i].firstElementChild.className = 'fa fa-star';
     }
     //reset timer
     seconds = 0;
@@ -215,8 +215,10 @@ function moveCounter() {
         }
     } else if (moves >= 13 && moves <= 18) {
         starList.lastElementChild.firstElementChild.className = 'fa fa-star-o';
+        console.log(minutes);
     } else if (moves > 18) {
         starList.lastElementChild.previousElementSibling.firstElementChild.className = 'fa fa-star-o';
+        console.log(minutes);
     }
 }
 
