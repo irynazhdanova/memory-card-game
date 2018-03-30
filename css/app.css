@@ -54,7 +54,7 @@ h1 {
 .deck .card {
     height: 125px;
     width: 125px;
-    background: #2e3d49;
+    background-color: #2e3d49;
     font-size: 0;
     color: #ffffff;
     border-radius: 8px;
@@ -63,11 +63,15 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transform: rotateY(180deg);
+    transition: font-size 0.2s, background-color 1s, transform 1s;
+    z-index: 1;
 }
 
 .deck .card.open {
-    transform: rotateY(0);
-    background: #02b3e4;
+    transform: rotateY(360deg);
+    transition: transform 1s;
+    background-color: #02b3e4;
     cursor: default;
 }
 
@@ -77,8 +81,52 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: #02ccba;
+    background-color: #02ccba;
     font-size: 33px;
+    transform: none;
+    transition: background-color 0.3s;
+    animation: scale 0.5s linear;    
+}
+
+.deck .card.mismatch {
+    background: linear-gradient(180deg, #ff4d4d 0%,  #ffb3b3 100%);
+    transition: background 0.3s;
+    animation: shake 0.5s linear;
+}
+
+/* Animation to run when two cards do not match */
+@keyframes shake {
+    20% {
+        transform: rotate(15deg);
+    }
+    40% {
+        transform: rotate(-15deg);
+    }
+    60% {
+        transform: rotate(15deg);
+    }
+    80% {
+        transform: rotate(-15deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+
+/* Animation to run when two cards match */
+@keyframes scale {
+    25% {
+        transform: scale(1.1, 1.1);
+    }
+    50% {
+        transform: scale(1.2, 1.2);
+    }
+    75% {
+        transform: scale(1.1, 1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .deck .card.disable {
