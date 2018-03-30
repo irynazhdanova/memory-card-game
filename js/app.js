@@ -211,12 +211,12 @@ function moveCounter() {
     // change stars rating according to the move count
     if (moves >= 0 && moves < 13) {
         for (let i = 0; i < stars.length; i++) {
-            stars[i].style.visibility = 'visible';
+            stars[i].firstElementChild.className = 'fa fa-star';
         }
     } else if (moves >= 13 && moves <= 18) {
-        starList.lastElementChild.style.visibility = 'hidden';
+        starList.lastElementChild.firstElementChild.className = 'fa fa-star-o';
     } else if (moves > 18) {
-        starList.lastElementChild.previousElementSibling.style.visibility = 'hidden';
+        starList.lastElementChild.previousElementSibling.firstElementChild.className = 'fa fa-star-o';
     }
 }
 
@@ -246,7 +246,6 @@ function timeCount() {
 // Stop timer
     function stopTimer() {
         clearInterval(time);
-        
     }
 
 // Add zeros to timer displayed on the page 
