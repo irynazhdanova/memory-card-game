@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #fff url(../img/geometry2.png); /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -95,14 +95,13 @@ h1 {
     margin-bottom: 10px;
 }
 
-.score-panel .stars {
-    margin: 0;
+.stars {
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.stars li {
     list-style: none;
     display: inline-block;
 }
@@ -114,4 +113,49 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/*
+ * Styles for modal with final score
+ */
+.final-score {
+    display: none;
+    width: 80%;
+    /* height: 100vh; */
+    padding: 50px 0;
+    text-align: center;
+    position: fixed;
+    top: 25%;
+    left: 10%;
+    z-index: 1;
+    background: #fff url(../img/modal-background-transparent.png);
+    background-size: contain;
+    background-position: center center;
+    font-size: 1.2em;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    
+}
+
+.final-score .stars {
+    display: block;
+    margin: 0 0 5px 0;
+}
+
+.modal-button {
+    padding: 10px;
+    margin: 16px;
+    background-color: #02ccba;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 3px 0px #000;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.modal-button:active {
+    box-shadow: 1px 2px 3px 1px #000;
 }
