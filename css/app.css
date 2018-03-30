@@ -184,7 +184,17 @@ h1 {
     font-weight: 700;
     border-radius: 10px;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-    
+    animation: fromtop 1s;
+}
+
+/* Animation to display modal */
+@keyframes fromtop {
+    from {
+        top: -1000px;
+    }
+    to {
+        top: 25%;
+    }
 }
 
 .final-score .stars {
