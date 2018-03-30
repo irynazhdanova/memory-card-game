@@ -28,6 +28,18 @@ const timer = document.querySelector('.timer');
 
 let time; // used to set setInterval with time count function
 
+let modal = document.getElementById('modal');
+
+let finalTimer = document.querySelector('.final-score-timer');
+
+let finalMoves = document.querySelector('.final-move-count');
+
+let finalStars = document.querySelector('.final-score .stars');
+
+const closeModalButton = document.querySelector('.close-modal');
+
+const playAgainButton = document.querySelector('.play-again');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -39,7 +51,12 @@ document.addEventListener('DOMContentLoaded', startGame);
 
 // Start new game on restart button press
 restart.addEventListener('click', function() {
-    startGame();
+    // Disable restart game from restart button if modal is open
+    if (modal.style.display === 'block') {
+        return false;
+    } else {
+        startGame();
+    } 
 });
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -60,8 +77,9 @@ function shuffle(array) {
 //start game function definition
 function startGame() {
     //empty cards arrays
-    matchedCards = [];
-    openedCards = [];
+    emptyArray(openedCards);
+    emptyArray(matchedCards);
+
     //reset moves count
     clicks = 0;
     moves = 0;
@@ -71,6 +89,9 @@ function startGame() {
         stars[i].style.visibility = 'visible';
     }
     //reset timer
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
     stopTimer();
     timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
     //empty the list of cards
@@ -107,8 +128,7 @@ deck.addEventListener('click', function(event) {
     if(!(event.target.className === 'deck') && (openedCards.length <= 2)) {
         openCard(event);
         addToOpenedCards(event);
-    }
-
+    } 
 });
 
 //A function to open a card's icon
@@ -125,12 +145,10 @@ function addToOpenedCards(event) {
     openedCards.push(event.target.firstElementChild);
     moveCounter();
     // Check if two cards match or not happens when there're two opened cards
-    if (openedCards.length === 2) {
-        // add a move to moves if user opened two cards
-        
+    if (openedCards.length === 2) {        
         // Compare if two opened cards match  
         if (openedCards[0].classList.value === openedCards[1].classList.value) {
-            match(openedCards);
+            match(openedCards, matchedCards);
         } else {
             notMatch(openedCards);
         }
@@ -139,15 +157,26 @@ function addToOpenedCards(event) {
 
 // Function to run if two opened cards do match
 // cards are locked in the open position
-function match(arr) {
+function match(arr1, arr2) {
     setTimeout(function(){
-        arr[0].parentNode.classList.remove('open', 'show');
-        arr[0].parentNode.classList.add('match');
-        arr[1].parentNode.classList.remove('open', 'show');
-        arr[1].parentNode.classList.add('match');
-        matchedCards.push(arr[0], arr[1]);
-        openedCards = [];   
-    }, 800); 
+        arr1[0].parentNode.classList.remove('open', 'show');
+        arr1[0].parentNode.classList.add('match');
+        arr1[1].parentNode.classList.remove('open', 'show');
+        arr1[1].parentNode.classList.add('match');
+        arr2.push(arr1[0], arr1[1]);
+        emptyArray(arr1);
+    }, 800);
+    // when all cards do match matched cards list contains 16 items and modal appears
+    setTimeout(function(){
+        if(arr2.length === 16) {
+            gameWon();
+        }
+    }, 1000);
+}
+
+// Empty an array
+function emptyArray(arr) {
+    arr.splice(0, arr.length);
 }
 
 // Function to run if two opened cards do not match
@@ -191,6 +220,10 @@ function moveCounter() {
     }
 }
 
+/* 
+Timer functionality
+*/
+
 // Timer function
 let seconds = 0;
 let minutes = 0;
@@ -213,12 +246,10 @@ function timeCount() {
 // Stop timer
     function stopTimer() {
         clearInterval(time);
-        seconds = 0;
-        minutes = 0;
-        hours = 0;
+        
     }
 
-// Add zeros to timer 
+// Add zeros to timer displayed on the page 
 function addZero(num) {
     if (num < 10) {
         return '0' + num;
@@ -226,3 +257,30 @@ function addZero(num) {
         return num;
     }
 }
+
+// Congratulation (you won) window
+function gameWon() {
+    stopTimer();
+    modal.style.display = 'block';
+    finalMoves.innerHTML = moveCount.innerHTML;
+    finalTimer.innerHTML = timer.innerHTML;
+    finalStars.innerHTML = 'Rating: ' + starList.innerHTML; 
+}
+
+// Close modal without starting new game
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Event listener for 'No, thanks!' button to close modal
+closeModalButton.addEventListener('click', function() {
+    closeModal();
+});
+
+// Event listener for 'Play again!' button 
+//to close modal and start new game
+playAgainButton.addEventListener('click', function() {
+    closeModal();
+    startGame();
+});
+
