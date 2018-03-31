@@ -20,27 +20,29 @@ let moves = 0;// move counter (two opened cards)
 
 let clicks = 0; // click counter
 
-const starList = document.querySelector('.stars');
+const starList = document.querySelector('.stars'); 
 
 let stars =  document.querySelectorAll('.stars li');
 
-const timer = document.querySelector('.timer');
+const timer = document.querySelector('.timer'); // score panel timer
+
+const pauseBtn = document.querySelector('.pause'); // pause/play button
 
 let time; // used to set setInterval with time count function
 
-let modal = document.getElementById('modal');
+let modal = document.getElementById('modal'); //final-score modal
 
-let finalTimer = document.querySelector('.final-score-timer');
+let finalTimer = document.querySelector('.final-score-timer'); // final time on modal
 
-let finalMoves = document.querySelector('.final-move-count');
+let finalMoves = document.querySelector('.final-move-count'); //final moves count on modal
 
-let finalStars = document.querySelector('.final-score .stars');
+let finalStars = document.querySelector('.final-score .stars'); //final star rating on modal
 
 const closeModalButton = document.querySelector('.close-modal');
 
 const playAgainButton = document.querySelector('.play-again');
 
-const pauseBtn = document.querySelector('.pause');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -183,15 +185,15 @@ function emptyArray(arr) {
 // Function to run if two opened cards do not match
 // Cards get closed and become available for clicks again
 function notMatch(arr) {
-        setTimeout(function(){
-            arr[0].parentNode.classList.add('mismatch');
-            arr[1].parentNode.classList.add('mismatch');
-        }, 500);
-        setTimeout(function() {
-            arr[0].parentNode.classList.remove('open', 'show', 'disable', 'mismatch');
-            arr[1].parentNode.classList.remove('open', 'show', 'disable', 'mismatch');
-            openedCards = [];
-        }, 1500); 
+    setTimeout(function(){
+        arr[0].parentNode.classList.add('mismatch');
+        arr[1].parentNode.classList.add('mismatch');
+    }, 500);
+    setTimeout(function() {
+        arr[0].parentNode.classList.remove('open', 'show', 'disable', 'mismatch');
+        arr[1].parentNode.classList.remove('open', 'show', 'disable', 'mismatch');
+        openedCards = [];
+    }, 1500); 
 }
 
 //Count clicks function
@@ -236,13 +238,14 @@ let hours = 0;
 function timeCount() {
     pauseBtn.classList.remove('disable');
     pauseBtn.firstElementChild.className = 'fa fa-pause-circle-o';
+    // Add zeros on timer
     timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
     seconds++;
     if(seconds === 60) {
         minutes++;
         seconds = 0;
     }
-        
+       
     if(minutes === 60) {
         hours++;
         minutes = 0;
@@ -252,6 +255,7 @@ function timeCount() {
 // Stop timer
 function stopTimer() {
     clearInterval(time);
+    //Change pause button icon to 'play'
     pauseBtn.firstElementChild.className = 'fa fa-play-circle-o';
 }
 
@@ -268,6 +272,7 @@ function addZero(num) {
 function gameWon() {
     stopTimer();
     modal.style.display = 'block';
+    // Display final scores in modal
     finalMoves.innerHTML = moveCount.innerHTML;
     finalTimer.innerHTML = timer.innerHTML;
     finalStars.innerHTML = 'Rating: ' + starList.innerHTML;
@@ -312,6 +317,7 @@ function play() {
     }
 }
 
+// Pause/play button event listener to pause or continue game
 pauseBtn.addEventListener('click', function() {
     if(pauseBtn.firstElementChild.className === 'fa fa-pause-circle-o') {
         pause();
