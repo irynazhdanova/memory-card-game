@@ -30,13 +30,15 @@ const pauseBtn = document.querySelector('.pause'); // pause/play button
 
 let time; // used to set setInterval with time count function
 
-let modal = document.getElementById('modal'); //final-score modal
+const modal = document.getElementById('modal'); //final-score modal
 
-let finalTimer = document.querySelector('.final-score-timer'); // final time on modal
+const modalHeader = document.querySelector('.modal-header');
 
-let finalMoves = document.querySelector('.final-move-count'); //final moves count on modal
+const finalTimer = document.querySelector('.final-score-timer'); // final time on modal
 
-let finalStars = document.querySelector('.final-score .stars'); //final star rating on modal
+const finalMoves = document.querySelector('.final-move-count'); //final moves count on modal
+
+const finalStars = document.querySelector('.final-score .stars'); //final star rating on modal
 
 const closeModalButton = document.querySelector('.close-modal');
 
@@ -219,10 +221,13 @@ function moveCounter() {
         for (let i = 0; i < stars.length; i++) {
             stars[i].firstElementChild.className = 'fa fa-star';
         }
+        modalHeader.innerText = 'That Was Awesome!'
     } else if (moves >= 13 && moves <= 18) {
         starList.lastElementChild.firstElementChild.className = 'fa fa-star-o';
+        modalHeader.innerText = 'Great Job!'
     } else if (moves > 18) {
         starList.lastElementChild.previousElementSibling.firstElementChild.className = 'fa fa-star-o';
+        modalHeader.innerText = 'Congratulations! You Won!'
     }
 }
 
