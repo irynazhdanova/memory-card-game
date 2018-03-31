@@ -145,8 +145,9 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 400px;
     margin-bottom: 10px;
+    font-size: 1.5rem;
 }
 
 .stars {
@@ -168,6 +169,15 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.score-panel .pause {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.score-panel .pause.disable {
+    pointer-events: none;
 }
 
 /*
