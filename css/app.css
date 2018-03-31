@@ -152,6 +152,7 @@ h1 {
 .stars li {
     list-style: none;
     display: inline-block;
+    color: #ffcc00;
 }
 
 .score-panel .timer {
