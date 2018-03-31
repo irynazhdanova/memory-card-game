@@ -40,6 +40,7 @@ const closeModalButton = document.querySelector('.close-modal');
 
 const playAgainButton = document.querySelector('.play-again');
 
+const pauseBtn = document.querySelector('.pause');
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -198,7 +199,6 @@ function moveCounter() {
     clicks++;
     // if user opened two cards add one move to moves
     moves = Math.floor(clicks/2);
-    
     if (moves ===1) {
         moveCount.nextElementSibling.innerHTML = ' Move';
     } else {
@@ -234,23 +234,26 @@ let minutes = 0;
 let hours = 0;
 
 function timeCount() {
-        timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
-        seconds++;
-        if(seconds === 60) {
-            minutes++;
-            seconds = 0;
-        }
+    pauseBtn.classList.remove('disable');
+    pauseBtn.firstElementChild.className = 'fa fa-pause-circle-o';
+    timer.innerHTML = addZero(hours) + ':' + addZero(minutes) + ':' + addZero(seconds);
+    seconds++;
+    if(seconds === 60) {
+        minutes++;
+        seconds = 0;
+    }
         
-        if(minutes === 60) {
-            hours++;
-            minutes = 0;
-        }
+    if(minutes === 60) {
+        hours++;
+        minutes = 0;
+    }
 }
 
 // Stop timer
-    function stopTimer() {
-        clearInterval(time);
-    }
+function stopTimer() {
+    clearInterval(time);
+    pauseBtn.firstElementChild.className = 'fa fa-play-circle-o';
+}
 
 // Add zeros to timer displayed on the page 
 function addZero(num) {
@@ -267,7 +270,10 @@ function gameWon() {
     modal.style.display = 'block';
     finalMoves.innerHTML = moveCount.innerHTML;
     finalTimer.innerHTML = timer.innerHTML;
-    finalStars.innerHTML = 'Rating: ' + starList.innerHTML; 
+    finalStars.innerHTML = 'Rating: ' + starList.innerHTML;
+    //disable the pause button from working when modal is open
+    pauseBtn.firstElementChild.className = 'fa fa-play-circle-o';
+    pauseBtn.classList.add('disable');
 }
 
 // Close modal without starting new game
@@ -286,4 +292,32 @@ playAgainButton.addEventListener('click', function() {
     closeModal();
     startGame();
 });
+
+// Pause game
+function pause() {
+    stopTimer();
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.add('disable');
+    }
+}
+
+// Continue (play) game
+function play() {
+    time = setInterval(function(){
+        timeCount();
+    }, 1000);
+    pauseBtn.firstElementChild.className = 'fa fa-pause-circle-o';
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.remove('disable');
+    }
+}
+
+pauseBtn.addEventListener('click', function() {
+    if(pauseBtn.firstElementChild.className === 'fa fa-pause-circle-o') {
+        pause();
+    } else {
+        play();
+    }
+});
+
 
