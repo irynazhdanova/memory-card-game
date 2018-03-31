@@ -39,7 +39,7 @@ h1 {
 
 .deck {
     width: 660px;
-    min-height: 680px;
+    height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -217,4 +217,62 @@ h1 {
 
 .modal-button:active {
     box-shadow: 1px 2px 3px 1px #000;
+}
+
+/* Media quieries */
+@media screen and (max-width: 700px) {
+    .deck {
+        width: 500px;
+        height: 500px;
+        padding: 20px;
+    }
+
+    .deck .card {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 530px) {
+
+    /* Styles for deck of cards */
+    .deck {
+        width: 300px;
+        height: 300px;
+        padding: 10px;
+    }
+
+    .deck .card {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Styles for score panel */
+    .score-panel {
+        width: 300px;
+        text-align: center;
+    }
+
+    .score-panel .restart {
+        float: none;
+    }
+
+    /* Styles for modal with final score */
+    .final-score {
+        top: 126px;
+        width: 92%;
+        left: 4%;
+        animation: fromtop 1s;
+    }
+
+    /* Animation of modal display */
+    @keyframes fromtop {
+        from {
+            top: -1000px;
+        }
+        to {
+            top: 126px;
+        }
+    }
+
 }
