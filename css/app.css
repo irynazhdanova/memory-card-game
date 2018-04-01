@@ -148,6 +148,9 @@ h1 {
     width: 400px;
     margin-bottom: 10px;
     font-size: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .stars {
@@ -167,7 +170,6 @@ h1 {
 }
 
 .score-panel .restart {
-    float: right;
     cursor: pointer;
 }
 
@@ -268,16 +270,13 @@ h1 {
     /* Styles for score panel */
     .score-panel {
         width: 300px;
+        flex-direction: column;
         text-align: center;
-    }
-
-    .score-panel .restart {
-        float: none;
     }
 
     /* Styles for modal with final score */
     .final-score {
-        top: 126px;
+        top: 85px;
         width: 92%;
         left: 4%;
         animation: fromtop 1s;
@@ -289,7 +288,7 @@ h1 {
             top: -1000px;
         }
         to {
-            top: 126px;
+            top: 85px;
         }
     }
 }
