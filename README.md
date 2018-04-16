@@ -18,6 +18,8 @@ Internet connection is required when playing game to load fontawesome icons and 
 
 To play the game no additional packages or libraries required.
 
+Online game preview is available [here](https://irynazhdanova.github.io/memory-card-game/)
+
 ### Game instructions
 
 The game starts with the first click on any card on deck. Only two cards at a time can be opened. 
@@ -29,7 +31,7 @@ Star rating:
 * more than 18 moves - 1 star;
 
 
-** Enjoy the game and have fun!**
+**Enjoy the game and have fun!**
 
 ## Contributing
 
